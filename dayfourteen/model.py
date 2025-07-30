@@ -1,5 +1,5 @@
 class Loan:
-    def __init__(self,schemaNo, schemeName, schemeType, schemeEligibility, schemeUpdated, schemeRoi, schemeMaxAmount):
+    def __init__(self,schemaNo, schemeName=None, schemeType=None, schemeEligibility=None, schemeUpdated=None, schemeRoi=None, schemeMaxAmount=None):
         self.schemeNo = schemaNo
         self.schemeName = schemeName
         self.schemeType = schemeType

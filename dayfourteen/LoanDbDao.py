@@ -37,7 +37,43 @@ class LoanMySQLService:
         loans = self.cursor.fetchall()
         for loan in loans:
             print(self.getMessage("MSG_VIEW_LOAN",scheme=loan))
+    def modifySchemes(self,loan):
+        updates = []
+        if loan.schemeName: updates.append("schemeName='"+loan.schemeName+"'")
+        if loan.schemeType: updates.append("schemeType='"+loan.schemeType+"'")
+        if loan.schemeEligibility: updates.append("schemeEligibility="+str(loan.schemeEligibility))
+        if loan.schemeUpdated: updates.append("schemeUpdated='"+loan.schemeUpdated+"'")
+        if loan.schemeRoi: updates.append("schemeRoi="+str(loan.schemeRoi))
+        if loan.schemeMaxAmount: updates.append("schemeMaxAmount="+str(loan.schemeMaxAmount))
+        qry_up = ",".join(each for each in updates)
+        qry = f"update {self.table} set {qry_up} where schemeNo={loan.schemeNo}"
+        try:
+            self.cursor.execute(qry)
+            self.connection.commit()
+            if self.cursor.rowcount>0:print(self.getMessage("MSG_UPDATE_OK",schemeNo=loan.schemeNo))
+            else: print(self.getMessage("MSG_UPDATE_FAIL",schemeNo=loan.schemeNo))
+        except Exception as e:
+            print(self.getMessage("MSG_UPDATE_FAIL",schemeNo=loan.schemeNo))
+    def discontinue(self,schemeNo):
+        qry = f"delete from {self.table} where schemeNo={schemeNo}"
+        self.cursor.execute(qry)
+        self.connection.commit()
+        if self.cursor.rowcount>0:
+            print(self.getMessage("MSG_DELETE_OK",schemeNo=schemeNo))
+        else:
+            print(self.getMessage("MSG_DELETE_NOT_OK",schemeNo=schemeNo))
         
-service = LoanMySQLService()
+        
+# service = LoanMySQLService()
 # service.introduceScheme(Loan(727362,"StartUp","Business","Incorporates",'2023-01-20',7.1,500000))
-service.viewScehemes()
+# service.viewScehemes()
+# loan = Loan(7777777)
+# loan.schemeMaxAmount=1200000
+# loan.schemeType="business"
+# service.modifySchemes(loan)
+# loan = Loan(87656733)
+# loan.schemeType = "personal"
+# loan.schemeRoi = 12.8
+# service.modifySchemes(loan)
+# service.discontinue(87656733)
+# service.viewScehemes()
