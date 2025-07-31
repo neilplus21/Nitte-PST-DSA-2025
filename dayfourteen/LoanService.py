@@ -1,9 +1,10 @@
-import datetime
 from LoanDbDao import *
+from LoanFileDao import *
 from model import Loan
 class LoanService:
     def __init__(self,source="db"):
         if source == "db": self.repo = LoanMySQLService()
+        else: self.repo = LoanFileService()
     def introduce(self,no,name,type,elig,up,roi,amount):
         loan = Loan(no)
         loan.schemeName=name

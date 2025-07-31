@@ -6,7 +6,8 @@ from LoanService import *
 load_dotenv()
 
 print(os.getenv("WELCOME"))
-service=LoanService()
+data_source = input(os.getenv("SELECT_SOURCE"))
+service=LoanService(data_source)
 while True:
     print(os.getenv("MENU"))
     choice = int(input(os.getenv("ASK_SELECT")))
