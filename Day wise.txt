@@ -1475,6 +1475,4 @@ LLD with msql as data logic built
 
 
 Day 15: LLD
-Loan LLD with File and Multiligual support
-
-
+Loan LLD with File DAO and Multiligual support
